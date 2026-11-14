@@ -43,7 +43,12 @@ class Store:
             {"label": "待处理", "value": sum(int(item["pending"]) for item in modules)},
             {"label": "异常量", "value": sum(int(item["abnormal"]) for item in modules)},
         ]
-        return {"cards": cards, "modules": modules}
+        payload: dict[str, object] = {"cards": cards, "modules": modules}
+        # 看板需要按准入结论聚合；延迟导入避免 store 加载阶段产生循环依赖
+        from app.services.admission import admission_service
+
+        payload["admission"] = admission_service.summary()
+        return payload
 
 
 store = Store()

@@ -9,9 +9,12 @@ const columns = [
   "代理端口",
   "匿名等级",
   "出站地域",
+  "允许目标域",
   "响应毫秒",
   "存活检测时间",
-  "分配权重"
+  "分配权重",
+  "当前连接数",
+  "容量上限"
 ]
 const actions = [
   "提交存活检测",
@@ -73,7 +76,7 @@ export default function ProxypoolView() {
     try {
       const response = await request(`${ENDPOINT}/${row.id}/actions`, {
         method: 'POST',
-        body: JSON.stringify({ action }),
+        body: JSON.stringify({ values: { action } }),
       })
       if (!response.ok) {
         throw new Error('代理池管理动作未生效，请稍后重试')

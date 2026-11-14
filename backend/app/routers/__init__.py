@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from app.routers import connector as router_connector
 from app.routers import proxypool as router_proxypool
+from app.routers import admission as router_admission
 from app.routers import deepcrawl as router_deepcrawl
 from app.routers import jsrender as router_jsrender
 from app.routers import parser as router_parser
@@ -25,4 +26,4 @@ from app.routers import healthcheck as router_healthcheck
 from app.routers import snapshot as router_snapshot
 from app.routers import audittrail as router_audittrail
 
-ROUTERS = [router_connector, router_proxypool, router_deepcrawl, router_jsrender, router_parser, router_dataclean, router_formatter, router_dedupengine, router_throttle, router_captcha, router_monitor, router_exporttask, router_seedmgr, router_sitemap, router_cookiejar, router_healthcheck, router_snapshot, router_audittrail]
+ROUTERS = [router_connector, router_proxypool, router_admission, router_deepcrawl, router_jsrender, router_parser, router_dataclean, router_formatter, router_dedupengine, router_throttle, router_captcha, router_monitor, router_exporttask, router_seedmgr, router_sitemap, router_cookiejar, router_healthcheck, router_snapshot, router_audittrail]

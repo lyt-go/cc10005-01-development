@@ -58,4 +58,13 @@ class ProxypoolService:
         entry["status"] = target
         entry["pending"] = target != STATUS_ORDER[-1]
         entry["abnormal"] = action in NEGATIVE_ACTIONS
+        if target == "已回收":
+            # 有效性边界：回收动作发生时刻释放有效准入，历史结论保留并标记失效
+            from app.services.admission import admission_service
+
+            affected = admission_service.release_proxy(
+                entry_id, f"代理实例 {entry.get('实例编号')} 于回收动作后不再承担接入"
+            )
+            suffix = f"，已同步释放 {affected} 条有效准入（历史记录保留）" if affected else ""
+            return entry, f"代理实例已{action}{suffix}"
         return entry, f"代理实例已{action}"

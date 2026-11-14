@@ -58,4 +58,13 @@ class ConnectorService:
         entry["status"] = target
         entry["pending"] = target != STATUS_ORDER[-1]
         entry["abnormal"] = action in NEGATIVE_ACTIONS
+        if target == "已离线":
+            # 连接器离线时刻释放其有效准入；预检失败不会改状态，离线一定来自显式动作
+            from app.services.admission import admission_service
+
+            affected = admission_service.release_connector(
+                entry_id, f"数据连接器 {entry.get('连接器编号')} 标记离线，接入准入终止"
+            )
+            suffix = f"，已同步释放 {affected} 条有效准入（历史记录保留）" if affected else ""
+            return entry, f"数据连接器已{action}{suffix}"
         return entry, f"数据连接器已{action}"

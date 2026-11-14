@@ -53,6 +53,18 @@ class ProxypoolEntry(BaseModel):
     field_6: str | None = None  # 存活检测时间
     field_7: str | None = None  # 分配权重
 
+class AdmissionEntry(BaseModel):
+    """代理可用性预检与接入准入明细结构。"""
+
+    field_0: str | None = None  # 准入编号
+    field_1: str | None = None  # 连接器编号
+    field_2: str | None = None  # 实例编号
+    field_3: str | None = None  # 代理地址
+    field_4: str | None = None  # 目标域
+    field_5: str | None = None  # 接入准入结论
+    field_6: str | None = None  # 不可分配原因
+    field_7: str | None = None  # 采样时刻
+
 class DeepcrawlEntry(BaseModel):
     """爬虫配置明细结构。"""
 
